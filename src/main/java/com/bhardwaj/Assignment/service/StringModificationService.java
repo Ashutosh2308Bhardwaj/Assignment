@@ -4,6 +4,8 @@ import com.bhardwaj.Assignment.model.InputDetail;
 import com.bhardwaj.Assignment.model.OutputDetail;
 import com.bhardwaj.Assignment.repository.InputDetailsRepository;
 import com.bhardwaj.Assignment.repository.OutputDetailsRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import java.util.List;
 @Service
 public class StringModificationService {
 
+    private static final Logger log = LoggerFactory.getLogger(StringModificationService.class);
+
     @Autowired
     InputDetailsRepository inputDetailsRepository;
 
@@ -23,6 +27,8 @@ public class StringModificationService {
     public void removeSimilarAdjacentCharacters(){
 
         List<InputDetail> inputDetails = inputDetailsRepository.findAll();   // Get all data in input_details table
+
+        log.info("input details data {}",inputDetails);
 
         List<OutputDetail> outputDetails = new ArrayList<>();
 
@@ -47,6 +53,8 @@ public class StringModificationService {
             OutputDetail outputDetail = new OutputDetail(input,output.toString(),count,new Timestamp(System.currentTimeMillis()));
             outputDetails.add(outputDetail);
         }
+
+        log.info("output details data {}",outputDetails);
 
         outputDetailsRepository.saveAll(outputDetails);         // insert data in ashutosh_bhardwaj_java_output table
 
